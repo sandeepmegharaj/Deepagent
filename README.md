@@ -2,23 +2,25 @@
 
 > **Live Demo:** [https://deepagent.streamlit.app/](https://deepagent.streamlit.app/)
 
-A multi-agent autonomous platform built on **LangChain**, **LangGraph**, and **DeepAgents**. It orchestrates multiple specialized sub-agents to plan multi-step workflows, conduct live web research with citations, inspect and profile data files (CSV, Excel, PDF), and generate interactive Plotly visualizations directly inside a ChatGPT-style conversational workspace.
+An enterprise-ready, multi-agent AI system powered by **Azure AI Services** and **Azure OpenAI Service**. It orchestrates specialized autonomous agents powered by **GPT-5** on Azure AI to execute complex reasoning, live web research with citations, automated data profiling on uploaded datasets (CSV, Excel, PDF), and inline interactive visual analytics within a ChatGPT-grade workspace.
 
 ---
 
 ## ⚡ Key Features
 
+- **☁️ Azure AI-Powered Intelligence:**
+  - Deployed on **Azure AI Foundry / Azure OpenAI Services** using enterprise-grade models (`ChatGPT-5 / GPT-5`).
+  - Secure API gateway integration supporting custom endpoints, high throughput, and seamless fallback routing.
 - **🤖 3 Autonomous Specialist Agents:**
-  - **Research Agent:** Conducts live web research and source citation synthesis via Tavily.
-  - **Data Analyst:** Executes deterministic data-quality checks, statistical profiling, and interactive chart generation.
-  - **Structured Researcher:** Generates structured Pydantic reports with confidence scoring and validated source URLs.
-- **💬 ChatGPT-Grade Interface:** Clean dark UI, full-width message composer with model selector (`ChatGPT-5`), file attachment chips, and collapsible step-by-step reasoning logs.
-- **📊 Interactive Data Visualizations:** Automatically renders inline Plotly charts (bar, line, scatter, box, pie, heatmap) from uploaded CSV/Excel files.
-- **📄 Document Extraction:** Bounded text and structural extraction from PDFs and TXT files without external OCR dependencies.
-- **🧠 Flexible Memory & Backends:**
-  - `StateBackend`: Isolated per-thread in-memory workspace.
-  - `FilesystemBackend`: Persistent local workspace with disk access.
-  - `StoreBackend`: Cross-thread persistent memory using LangGraph Store.
+  - **Research Agent:** Performs multi-step web investigation, source validation, and citation synthesis.
+  - **Data Analyst:** Deterministic data-quality auditing, statistical profiling, missing value diagnosis, and automated interactive chart generation.
+  - **Structured Researcher:** Schema-enforced research extraction outputting confidence metrics and validated reference sources.
+- **💬 Modern Conversational UI:** Clean, dark ChatGPT-style interface with full-width composer, model selector, file attachment badges, and collapsible execution step logs.
+- **📊 Interactive Data Visualizations:** Generates dynamic, responsive Plotly charts (bar, line, scatter, box, pie, heatmap) directly within the conversation flow.
+- **📄 Document & Tabular Processing:** High-speed text extraction from PDFs and multi-sheet Excel workbooks with bounded resource consumption.
+- **🧠 Scalable Memory & Context Management:**
+  - Stateful session tracking and thread checkpointing.
+  - In-memory workspace and persistent backend storage options for long-horizon agent tasks.
 
 ---
 
@@ -26,9 +28,9 @@ A multi-agent autonomous platform built on **LangChain**, **LangGraph**, and **D
 
 | Layer | Technologies |
 |---|---|
-| **Frontend / UI** | Streamlit, Custom Vanilla CSS (Dark Minimalist Theme) |
-| **Agent Framework** | LangChain, LangGraph, DeepAgents |
-| **LLM Provider** | OpenAI / Azure OpenAI (`openai:gpt-5`), Groq (fallback) |
-| **Search & Research** | Tavily Web Search API |
-| **Data & Viz** | Pandas, Plotly Express, OpenPyXL, PyPDF |
-| **State & Memory** | LangGraph `MemorySaver` (thread checkpointing), `InMemoryStore` |
+| **AI & Model Layer** | **Azure AI Services**, **Azure OpenAI Service** (`GPT-5`), Groq |
+| **Agent Architecture** | DeepAgents Multi-Agent Engine, Stateful Orchestration |
+| **Frontend / UI** | Streamlit, Custom Vanilla CSS (Dark Minimalist Architecture) |
+| **Data & Visual Analytics** | Pandas, Plotly Express, OpenPyXL, PyPDF |
+| **Search & Discovery** | Tavily Web Intelligence API |
+| **State & Checkpointing** | Thread Memory Saver, Persistent Key-Value Store |
