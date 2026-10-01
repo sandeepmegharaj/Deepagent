@@ -27,6 +27,14 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
+
+st.set_page_config(
+    page_title="Deep Agent Using LangChain",
+    page_icon="D",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
+
 from dotenv import load_dotenv
 from pydantic import BaseModel, Field
 from data_tools import (
@@ -56,6 +64,19 @@ UPLOAD_EXTENSIONS = SUPPORTED_UPLOAD_EXTENSIONS
 
 load_dotenv(ROOT_DIR / ".env")
 
+# Propagate secrets from Streamlit Cloud st.secrets into os.environ
+try:
+    for sec_k, sec_v in st.secrets.items():
+        if isinstance(sec_v, str):
+            if sec_k not in os.environ or not os.environ[sec_k]:
+                os.environ[sec_k] = sec_v.strip()
+        elif isinstance(sec_v, dict):
+            for sub_k, sub_v in sec_v.items():
+                if isinstance(sub_v, str) and (sub_k not in os.environ or not os.environ[sub_k]):
+                    os.environ[sub_k] = sub_v.strip()
+except Exception:
+    pass
+
 # Propagate custom endpoint and normalize Azure AI / OpenAI base URL
 for env_k in ("OPENAI_API_KEY", "OPENAI_BASE_URL", "OPENAI_API_BASE", "GROQ_API_KEY", "TAVILY_API_KEY"):
     if os.getenv(env_k):
@@ -67,6 +88,7 @@ if openai_base:
     if clean_base.endswith("/responses"):
         clean_base = clean_base[:-len("/responses")]
     os.environ["OPENAI_BASE_URL"] = clean_base
+    os.environ["OPENAI_API_BASE"] = clean_base
 
 from deepagents import create_deep_agent
 from deepagents.backends import FilesystemBackend, StateBackend, StoreBackend
@@ -1635,12 +1657,6 @@ def render_chat_workspace(cfg: dict[str, Any]) -> None:
 # ---------------------------------------------------------------------------
 # Streamlit app
 # ---------------------------------------------------------------------------
-st.set_page_config(
-    page_title="Deep Agent Using LangChain",
-    page_icon="D",
-    layout="wide",
-    initial_sidebar_state="expanded",
-)
 st.markdown(f"<style>{load_styles()}</style>", unsafe_allow_html=True)
 
 # --- session state init ------------------------------------------------------
