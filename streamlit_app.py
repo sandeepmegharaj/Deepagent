@@ -1243,7 +1243,7 @@ def render_blog_page() -> None:
         st.image(
             _report_img,
             caption="Deep Agent report: US COVID-19 trends, state rankings, and data quality summary",
-            use_container_width=True,
+            width='stretch',
         )
         st.markdown(
             """
