@@ -1,76 +1,77 @@
-# Deep Agents Streamlit App
+# 🚀 Deep Agent
 
-This app reproduces the repository's Deep Agents demo as a provider-configurable
-Streamlit application. The default model is OpenAI GPT-5. The agent graph
-remains based on `deepagents` and LangGraph, including planning, virtual file
-tools, context files, skills, subagents, structured research output,
-checkpointers, and selectable storage backends.
+> **Live Demo:** [https://deepagent.streamlit.app/](https://deepagent.streamlit.app/) *(or deploy via Streamlit Cloud)*
 
-Read [`DEEP_AGENT_GUIDE.md`](DEEP_AGENT_GUIDE.md) for the capability
-classification, sub-agent roles, task expectations, API-key placement, and a
-run checklist. Read [`ANTIGRAVITY_HANDOFF.md`](ANTIGRAVITY_HANDOFF.md) before
-opening the project in Antigravity.
+A multi-agent workspace built on **LangChain**, **LangGraph**, and **DeepAgents**. It plans multi-step tasks, conducts live web research with citations, extracts and profiles data files (CSV, Excel, PDF), and renders interactive Plotly charts directly inside a ChatGPT-style conversational UI.
 
-## Run locally
+---
 
-1. Copy `.env.example` to `.env`.
-2. Set `OPENAI_API_KEY` for the default GPT-5 model.
-3. Set `TAVILY_API_KEY` if web research should be enabled.
-4. Install dependencies and start Streamlit:
+## ⚡ Key Features
 
+- **🤖 3 Autonomous Specialist Agents:**
+  - **Research Agent:** Live web search and citation synthesis via Tavily.
+  - **Data Analyst:** Deterministic data quality checks, statistical profiling, and interactive chart generation.
+  - **Structured Researcher:** Generates structured Pydantic reports with confidence scores and source URLs.
+- **💬 ChatGPT-Grade Interface:** Clean dark UI, full-width composer with model selector (`ChatGPT-5`), file attachment chips, and collapsible step-by-step reasoning logs.
+- **📊 Interactive Data Visualizations:** Automatically creates inline Plotly charts (bar, line, scatter, box, pie, heatmap) from uploaded CSV/Excel files.
+- **📄 Document Extraction:** Bounded text and structural extraction from PDFs and TXT files without external OCR dependencies.
+- **🧠 Flexible Memory & Backends:**
+  - `StateBackend`: Isolated per-thread in-memory workspace.
+  - `FilesystemBackend`: Persistent local workspace with disk access.
+  - `StoreBackend`: Cross-thread persistent memory using LangGraph Store.
+
+---
+
+## 🛠 Tech Stack
+
+| Layer | Technologies |
+|---|---|
+| **Frontend / UI** | Streamlit, Custom Vanilla CSS (Dark Minimalist Theme) |
+| **Agent Framework** | LangChain, LangGraph, DeepAgents |
+| **LLM Provider** | OpenAI / Azure OpenAI (`openai:gpt-5`), Groq (fallback) |
+| **Search & Research** | Tavily Web Search API |
+| **Data & Viz** | Pandas, Plotly Express, OpenPyXL, PyPDF |
+| **State & Memory** | LangGraph `MemorySaver` (thread checkpointing), `InMemoryStore` |
+
+---
+
+## 🏁 Quickstart
+
+### 1. Clone & Install
 ```bash
-uv sync
-uv run streamlit run streamlit_app.py
+git clone https://github.com/sandeepmegharaj/Deepagent.git
+cd Deepagent
+pip install -r requirements.txt
 ```
 
-The same command works with a normal Python virtual environment and
-`pip install -r requirements.txt`.
-
-## Run tests
-
-```bash
-uv run python -m unittest discover -s tests -v
+### 2. Configure Environment
+Copy `.env.example` to `.env` and fill in your keys:
+```ini
+OPENAI_API_KEY=your_openai_api_key
+OPENAI_BASE_URL=https://your-endpoint.openai.azure.com/openai/v1  # optional
+TAVILY_API_KEY=your_tavily_api_key
+GROQ_API_KEY=your_groq_api_key                                  # optional
 ```
 
-## Streamlit Cloud
+### 3. Run Locally
+```bash
+streamlit run streamlit_app.py
+```
 
-Add provider keys under the app's Secrets settings instead of committing a
-`.env` file:
+---
 
+## ☁️ Deploy on Streamlit Cloud
+
+1. Fork or push this repository to GitHub.
+2. Go to [share.streamlit.io](https://share.streamlit.io) and create a **New app**:
+   - **Repository:** `sandeepmegharaj/Deepagent`
+   - **Branch:** `main`
+   - **Main file path:** `streamlit_app.py`
+3. In **Advanced settings → Secrets**, paste:
 ```toml
-OPENAI_API_KEY = "..."
-TAVILY_API_KEY = "..."
+OPENAI_API_KEY = "your_key"
+OPENAI_BASE_URL = "https://your-endpoint.openai.azure.com/openai/v1"
+TAVILY_API_KEY = "your_key"
+GROQ_API_KEY = "your_key"
 ```
-
-## Agent behavior
-
-- The default model is `openai:gpt-5`; GPT-5.4 and GPT-5.5 are also selectable.
-- The one-retry fallback logic is retained, but the current workspace UI
-  intentionally selects `None` and does not expose fallback model choices.
-- The main agent can plan with `write_todos`, use virtual file tools, load
-  `AGENTS.md` and skills, search through Tavily, and delegate to
-  `research-agent`, `structured-researcher`, and `data-analyst`.
-- The data analyst can inspect CSV, JSON, and Excel worksheets for profiles,
-  deterministic quality checks, numeric summaries, common values, and grouped
-  aggregations. Analysis is capped at the first 100,000 rows.
-- The agent can create interactive bar, line, area, scatter, histogram, box,
-  violin, pie, and correlation-heatmap charts from uploaded data. Chart payloads
-  are capped at 500 points and render directly in the conversation.
-- PDF and TXT uploads support bounded text extraction. PDF extraction reads at
-  most 20 pages and 20,000 characters per request; scanned PDFs require OCR.
-- Data Lab shows quality findings, an interactive missingness chart, and
-  previews, then downloads an HTML dashboard and a CSV of findings. The HTML
-  chart loads Plotly from its pinned CDN and needs an internet connection.
-- The interface uses a readable Inter/system sans stack inspired by Claude's
-  conversation typography, aligns user bubbles right, and keeps work details
-  and each created file collapsed until opened.
-- The left sidebar shows the files available to the current backend and lets
-  you preview their contents.
-- `StateBackend` is the safe default for in-thread scratch files.
-- `FilesystemBackend` maps virtual paths into `deepagentsdemo/` on disk.
-- `StoreBackend` keeps files across threads for the lifetime of the Streamlit
-  process through the in-memory LangGraph store.
-
-Uploads live under the ignored `deepagentsdemo/uploads/` folder and are not
-included in the Antigravity source ZIP. Do not place API keys in source files
-or commit `.env`.
+4. Click **Deploy**.
