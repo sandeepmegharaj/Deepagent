@@ -1,4 +1,4 @@
-deepagents
+deepagents==0.7.19
 streamlit>=1.40.0
 pandas
 plotly>=6.3.0
@@ -10,3 +10,4 @@ langchain
 langchain-openai
 langchain-groq
 langchain-anthropic
+langgraph
