@@ -1,0 +1,14 @@
+deepagents
+langchain
+langchain-anthropic
+langchain-openai
+langchain-groq
+streamlit
+pandas
+plotly>=6.3.0
+openpyxl
+pypdf>=5.1.0
+ipykernel
+tavily-python
+python-dotenv
+langchain_quickjs

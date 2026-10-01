@@ -1,0 +1,22 @@
+[project]
+name = "deepagentscourse"
+version = "0.1.0"
+description = "Provider-configurable Deep Agents Streamlit application"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "deepagents>=0.3.4",
+    "ipykernel>=7.1.0",
+    "langchain>=1.2.3",
+    "langchain-anthropic>=1.3.0",
+    "langchain-groq>=1.1.1",
+    "langchain-openai>=1.1.7",
+    "langchain-quickjs>=0.1.4",
+    "openpyxl>=3.1.5",
+    "pandas>=2.2.3",
+    "plotly>=6.3.0",
+    "pypdf>=5.1.0",
+    "python-dotenv>=1.2.1",
+    "streamlit>=1.58.0",
+    "tavily-python>=0.7.17",
+]
